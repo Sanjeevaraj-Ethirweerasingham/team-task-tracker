@@ -50,7 +50,7 @@ export default function ProjectsPage() {
         {projects.map(project => {
           const projectTasks = allTasks.filter(t => t.project_id === project.id);
           const stats = computeTaskStats(projectTasks);
-          const progress = stats.total > 0 ? Math.round(((stats.byStatus.completed || 0) / stats.total) * 100) : 0;
+          const progress = stats.total > 0 ? Math.round(((stats.completed || 0) / stats.total) * 100) : 0;
           
           return (
             <div 
@@ -78,19 +78,19 @@ export default function ProjectsPage() {
                     <div className="text-gray-500">Total</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-semibold text-emerald-600">{stats.byStatus.completed || 0}</div>
+                    <div className="font-semibold text-emerald-600">{stats.completed || 0}</div>
                     <div className="text-gray-500">Done</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-semibold text-blue-600">{stats.byStatus.in_progress || 0}</div>
+                    <div className="font-semibold text-blue-600">{stats.inProgress || 0}</div>
                     <div className="text-gray-500">Active</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-semibold text-amber-600">{stats.byStatus.pending || 0}</div>
+                    <div className="font-semibold text-amber-600">{stats.pending || 0}</div>
                     <div className="text-gray-500">Pending</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-semibold text-red-600">{stats.byStatus.blocked || 0}</div>
+                    <div className="font-semibold text-red-600">{stats.blocked || 0}</div>
                     <div className="text-gray-500">Blocked</div>
                   </div>
                 </div>

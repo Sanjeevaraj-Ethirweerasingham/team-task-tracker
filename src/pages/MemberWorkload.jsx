@@ -47,19 +47,19 @@ export default function MemberWorkload() {
         </div>
         <div className="bg-amber-50 border border-amber-100 p-4 rounded-xl shadow-sm">
           <p className="text-sm text-amber-700 mb-1">Pending</p>
-          <p className="text-2xl font-semibold text-amber-700">{stats.byStatus.pending || 0}</p>
+          <p className="text-2xl font-semibold text-amber-700">{stats.pending || 0}</p>
         </div>
         <div className="bg-blue-50 border border-blue-100 p-4 rounded-xl shadow-sm">
           <p className="text-sm text-blue-700 mb-1">In Progress</p>
-          <p className="text-2xl font-semibold text-blue-700">{stats.byStatus.in_progress || 0}</p>
+          <p className="text-2xl font-semibold text-blue-700">{stats.inProgress || 0}</p>
         </div>
         <div className="bg-red-50 border border-red-100 p-4 rounded-xl shadow-sm">
           <p className="text-sm text-red-700 mb-1">Blocked</p>
-          <p className="text-2xl font-semibold text-red-700">{stats.byStatus.blocked || 0}</p>
+          <p className="text-2xl font-semibold text-red-700">{stats.blocked || 0}</p>
         </div>
         <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-xl shadow-sm">
           <p className="text-sm text-emerald-700 mb-1">Completed</p>
-          <p className="text-2xl font-semibold text-emerald-700">{stats.byStatus.completed || 0}</p>
+          <p className="text-2xl font-semibold text-emerald-700">{stats.completed || 0}</p>
         </div>
         <div className="bg-red-50 border border-red-100 p-4 rounded-xl shadow-sm">
           <p className="text-sm text-red-700 mb-1">Overdue</p>

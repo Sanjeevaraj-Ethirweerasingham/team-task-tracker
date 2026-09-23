@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext.jsx';
 import { useNavigate } from 'react-router-dom';
-import { Plus, X } from 'lucide-react';
-import { createUser } from '../db/taskService.js';
+import { Plus, X, Trash2 } from 'lucide-react';
+import { createUser, deleteUser } from '../db/taskService.js';
 import { toast } from 'sonner';
 import { computeTaskStats, getInitials, cn, getColorIndex } from '../utils/helpers.js';
 import { AVATAR_COLORS } from '../utils/constants.js';
@@ -29,6 +29,18 @@ export default function TeamPage() {
     }
   };
 
+  const handleDeleteMember = async (e, userId) => {
+    e.stopPropagation();
+    if (window.confirm("Are you sure you want to remove this team member?")) {
+      try {
+        await deleteUser(userId);
+        toast.success("Team member removed");
+      } catch (err) {
+        toast.error("Failed to remove team member");
+      }
+    }
+  };
+
   return (
     <div className="p-6 h-full flex flex-col">
       <div className="flex items-center justify-between mb-6">
@@ -52,14 +64,23 @@ export default function TeamPage() {
               onClick={() => navigate(`/team/${user.id}`)}
               className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md cursor-pointer transition-shadow"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className={cn("w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold shrink-0", colorClass.bg, colorClass.text)}>
-                  {getInitials(user.name)}
+              <div className="flex justify-between items-start mb-6">
+                <div className="flex items-center gap-4">
+                  <div className={cn("w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold shrink-0", colorClass.bg, colorClass.text)}>
+                    {getInitials(user.name)}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg">{user.name}</h3>
+                    <p className="text-sm text-gray-500">{user.role}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 text-lg">{user.name}</h3>
-                  <p className="text-sm text-gray-500">{user.role}</p>
-                </div>
+                <button
+                  onClick={(e) => handleDeleteMember(e, user.id)}
+                  className="text-gray-400 hover:text-red-600 p-2 rounded-full hover:bg-red-50 transition-colors"
+                  title="Remove Member"
+                >
+                  <Trash2 size={18} />
+                </button>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-gray-50 p-3 rounded-lg">
@@ -68,11 +89,11 @@ export default function TeamPage() {
                 </div>
                 <div className="bg-amber-50 p-3 rounded-lg">
                   <p className="text-xs text-amber-600 mb-1">Pending</p>
-                  <p className="text-lg font-semibold text-amber-700">{stats.byStatus.pending || 0}</p>
+                  <p className="text-lg font-semibold text-amber-700">{stats.pending || 0}</p>
                 </div>
                 <div className="bg-blue-50 p-3 rounded-lg">
                   <p className="text-xs text-blue-600 mb-1">In Progress</p>
-                  <p className="text-lg font-semibold text-blue-700">{stats.byStatus.in_progress || 0}</p>
+                  <p className="text-lg font-semibold text-blue-700">{stats.inProgress || 0}</p>
                 </div>
                 <div className="bg-red-50 p-3 rounded-lg">
                   <p className="text-xs text-red-600 mb-1">Overdue</p>
@@ -80,11 +101,11 @@ export default function TeamPage() {
                 </div>
                 <div className="bg-red-50 p-3 rounded-lg">
                   <p className="text-xs text-red-600 mb-1">Blocked</p>
-                  <p className="text-lg font-semibold text-red-700">{stats.byStatus.blocked || 0}</p>
+                  <p className="text-lg font-semibold text-red-700">{stats.blocked || 0}</p>
                 </div>
                 <div className="bg-emerald-50 p-3 rounded-lg">
                   <p className="text-xs text-emerald-600 mb-1">Completed</p>
-                  <p className="text-lg font-semibold text-emerald-700">{stats.byStatus.completed || 0}</p>
+                  <p className="text-lg font-semibold text-emerald-700">{stats.completed || 0}</p>
                 </div>
               </div>
             </div>

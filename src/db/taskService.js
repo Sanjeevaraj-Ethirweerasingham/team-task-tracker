@@ -1,3 +1,4 @@
+import { generateId } from "../utils/helpers.js";
 import { supabase } from './supabase.js';
 
 // ── Task CRUD ───────────────────────────────────────────
@@ -172,10 +173,12 @@ export async function deleteProject(projectId) {
 
 // ── Users CRUD ──────────────────────────────────────────
 
+
 export async function createUser(data) {
   const { data: user, error } = await supabase
     .from('users')
     .insert({
+      id: generateId(),
       name: data.name,
       email: data.email || '',
       role: data.role || '',

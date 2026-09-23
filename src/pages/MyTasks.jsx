@@ -6,13 +6,13 @@ import { formatDate, isOverdue, getCalendarDays, isSameMonth, isSameDay } from '
 import { STATUS_COLORS, PRIORITY_COLORS, PRIORITY_LIST, STATUS_LIST, KANBAN_COLUMNS } from '../utils/constants.js';
 
 export default function MyTasks() {
-  const { currentUser, allTasks, projects, setSelectedTaskId, openAddTask } = useApp();
+  const { currentUser, filteredTasks, projects, setSelectedTaskId, openAddTask } = useApp();
   const [view, setView] = useState('list');
   const [sortBy, setSortBy] = useState('dueDate');
 
   if (!currentUser) return <div className="p-6">Please select a user in Settings.</div>;
 
-  const myTasks = allTasks.filter(t => t.assignee_id === currentUser.id);
+  const myTasks = filteredTasks.filter(t => t.assignee_id === currentUser.id);
   const sortedTasks = sortTasks(myTasks, sortBy);
 
   const renderListView = () => (
