@@ -111,11 +111,11 @@ export default function Dashboard() {
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Team Workload</h2>
           <div className="h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={workloadData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <XAxis dataKey="name" tick={{ fontSize: 12 }} interval={0} angle={-45} textAnchor="end" height={60} />
-                <YAxis tick={{ fontSize: 12 }} allowDecimals={false} />
+              <BarChart data={workloadData} layout="vertical" margin={{ top: 10, right: 20, left: 20, bottom: 0 }}>
+                <XAxis type="number" tick={{ fontSize: 12 }} allowDecimals={false} />
+                <YAxis type="category" dataKey="name" tick={{ fontSize: 12 }} width={80} />
                 <Tooltip cursor={{ fill: '#f3f4f6' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
-                <Bar dataKey="tasks" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="tasks" fill="#3b82f6" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
